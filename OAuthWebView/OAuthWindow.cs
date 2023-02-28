@@ -26,7 +26,11 @@ namespace OAuthWebView {
 #endif
 
             using (var window = new Window() {
+#if LINUX
+                CanResize = true,
+#else
                 CanResize = false,
+#endif
                 Title = title,
                 Size = size
             }) {
@@ -34,7 +38,7 @@ namespace OAuthWebView {
                 Application.Run(window, startUri.ToString());
             }
 
-            return currentUri;
+            return currentUri.AbsolutePath == endUri.AbsolutePath ? currentUri : null;
         }
 
         private void Window_Navigating(object sender, NavigatingEventArgs e) {

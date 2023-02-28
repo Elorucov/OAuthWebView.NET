@@ -23,7 +23,7 @@ namespace OAuthWebViewDemo {
             var window = new OAuthWindow(startUri, endUri, "OAuth", 480, 420);
             Uri authResult = window.StartAuthentication();
 
-            result.Text = authResult.ToString();
+            result.Text = authResult == null ? "WebView closed" : authResult.ToString();
             button.IsEnabled = true;
         }
     }

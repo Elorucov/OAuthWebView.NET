@@ -13,7 +13,7 @@ namespace OAuthWebViewDemo {
                 "End: https://oauth.vk.com/blank.html";
         }
 
-        private void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e) {
+        private async void Button_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e) {
             Uri startUri = null, endUri = null;
             if (!Uri.TryCreate(start.Text, UriKind.Absolute, out startUri)
              || !Uri.TryCreate(end.Text, UriKind.Absolute, out endUri)) return;
@@ -21,7 +21,7 @@ namespace OAuthWebViewDemo {
             button.IsEnabled = false;
 
             var window = new OAuthWindow(startUri, endUri, "OAuth", 480, 420);
-            Uri authResult = window.StartAuthentication();
+            Uri authResult = await window.StartAuthenticationAsync();
 
             result.Text = authResult == null ? "WebView closed" : authResult.ToString();
             button.IsEnabled = true;

@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using OAuthWebView;
 
 namespace OAuthWebViewDemo {
     public partial class App : Application {
@@ -14,6 +15,7 @@ namespace OAuthWebViewDemo {
             }
 
             base.OnFrameworkInitializationCompleted();
+            OAuthWindow.Initialize();
         }
     }
 }

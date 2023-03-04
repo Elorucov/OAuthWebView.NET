@@ -15,7 +15,6 @@ namespace OAuthWebViewDemo {
             }
 
             base.OnFrameworkInitializationCompleted();
-            OAuthWindow.Initialize();
         }
     }
 }

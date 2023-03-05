@@ -53,7 +53,17 @@ namespace OAuthWebView {
             window.Closed += Window_Closed;
             window.Show();
             window.LoadUrl(startUri.ToString());
+#if LINUX
+
+            Console.WriteLine($"Running application...");
+            Application.Run();
+            await Task.Factory.StartNew(() => {
+                Console.WriteLine($"Waiting MRES...");
+                mres.Wait();
+            }).ConfigureAwait(true);
+#else
             await Task.Factory.StartNew(() => mres.Wait()).ConfigureAwait(true);
+#endif
 
             // Cannot dispose the window object yet...
 

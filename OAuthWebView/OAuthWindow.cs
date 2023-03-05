@@ -57,28 +57,28 @@ namespace OAuthWebView {
 
             Console.WriteLine($"Running application...");
             Application.Run();
+#else
             await Task.Factory.StartNew(() => {
                 Console.WriteLine($"Waiting MRES...");
                 mres.Wait();
             }).ConfigureAwait(true);
-#else
-            await Task.Factory.StartNew(() => mres.Wait()).ConfigureAwait(true);
 #endif
 
             // Cannot dispose the window object yet...
-
+            Console.WriteLine($"MRES is set! Now returning URI.");
             mres.Dispose();
             return currentUri.AbsolutePath == endUri.AbsolutePath ? currentUri : null;
         }
 
         private void Window_Closed(object sender, EventArgs e) {
             window.Closed -= Window_Closed;
+            window.Navigating -= Window_Navigating;
+            Console.WriteLine($"Window closed.");
             mres.Set();
         }
 
         private void Window_Navigating(object sender, NavigatingEventArgs e) {
             Console.WriteLine($"Navigating to {e.Url}");
-            System.Diagnostics.Debug.WriteLine($"Navigating to {e.Url}");
             currentUri = e.Url;
             if (currentUri.AbsolutePath == endUri.AbsolutePath) {
                 window.Close();
